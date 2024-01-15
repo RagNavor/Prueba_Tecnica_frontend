@@ -9,3 +9,6 @@ export const createUser = (user)=> {
 export const loginUser = (user)=>{
     return userApi.post('/login',user)
 }
+export const logoutUser = (token)=>{
+    return userApi.get(`/logout?token=${token}`)
+}

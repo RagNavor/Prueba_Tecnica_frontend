@@ -2,16 +2,24 @@ import { useForm } from "react-hook-form";
 import {loginUser} from "../API/users_api";
 
 
-export function LogInForm(){
+export function LogInForm({
+}){
     const {register, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = handleSubmit(async (data)=>{
         try {
-            await loginUser(data).then(response => {
-                const token  = response.data;
-                localStorage.setItem('token', token);
-            })
             
-            window.location.href = '/dashboard'
+            await loginUser(data).then(response => {
+                console.log(response.data)
+                const token  = response.data.token;
+                console.log(token)
+                localStorage.setItem('token', token);
+                
+            
+            })
+                if(localStorage.getItem('token')){
+                window.location.href = '/Dashboard';
+                console.log(localStorage.getItem('token'));
+                }
             
         } catch (error) {
         }
@@ -28,7 +36,7 @@ export function LogInForm(){
             {...register('password',{required:true})}
             />
 
-            <button>LogIn</button>
+            <button>Ingresar</button>
         </form>
     )
 }
